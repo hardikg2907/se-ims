@@ -5,7 +5,7 @@ const db = client.db("se-ims");
 export async function GET(req, res) {
   try {
     const products = await db.collection("products").find({}).toArray();
-    return Response.json({ products });
+    return Response.json(products);
   } catch (error) {
     console.log(error);
     return Response.json({ error: "Internal Server Error" });

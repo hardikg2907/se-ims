@@ -18,7 +18,7 @@ const Home = () => {
 
   const fetchProducts = async () => {
     const response = await axios.get("/api/products");
-    setProducts(response.data?.products);
+    setProducts(response.data);
   };
 
   const handleInputChange = (e) => {
@@ -36,6 +36,16 @@ const Home = () => {
       price: 0,
     });
     fetchProducts();
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      console.log(id);
+      await axios.delete(`/api/products/${id}`);
+      fetchProducts();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
   };
 
   return (
@@ -116,6 +126,12 @@ const Home = () => {
             <p>
               <span className="font-bold">Price:</span> ${product.price}
             </p>
+            <button
+              onClick={() => handleDelete(product._id)}
+              className="mt-4 bg-red-500 text-white p-2 rounded hover:bg-red-700"
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
