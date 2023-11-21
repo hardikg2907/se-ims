@@ -45,7 +45,9 @@ const Home = () => {
   };
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === "quantity" || e.target.name === "price")
+      setFormData({ ...formData, [e.target.name]: +e.target.value });
+    else setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
