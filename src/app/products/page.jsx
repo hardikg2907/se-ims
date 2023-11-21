@@ -1,9 +1,32 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { TrashIcon } from "lucide-react";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const [isModal, setIsModal] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -36,6 +59,7 @@ const Home = () => {
       price: 0,
     });
     fetchProducts();
+    setIsModal(false);
   };
 
   const handleDelete = async (id) => {
@@ -51,90 +75,122 @@ const Home = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Product Management</h1>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-        <label className="block mb-2">Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          className="border border-gray-300 p-2 w-full mb-4"
-          required
-        />
 
-        <label className="block mb-2">Description:</label>
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
-          onChange={handleInputChange}
-          className="border border-gray-300 p-2 w-full mb-4"
-        />
-
-        <label className="block mb-2">Category:</label>
-        <input
-          type="text"
-          name="category"
-          value={formData.category}
-          onChange={handleInputChange}
-          className="border border-gray-300 p-2 w-full mb-4"
-        />
-
-        <label className="block mb-2">Quantity:</label>
-        <input
-          type="number"
-          name="quantity"
-          value={formData.quantity}
-          onChange={handleInputChange}
-          className="border border-gray-300 p-2 w-full mb-4"
-          required
-        />
-
-        <label className="block mb-2">Price:</label>
-        <input
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleInputChange}
-          className="border border-gray-300 p-2 w-full mb-4"
-          required
-        />
-
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
-        >
-          Add Product
-        </button>
-      </form>
-
+      <Dialog open={isModal} onOpenChange={setIsModal}>
+        <DialogTrigger asChild>
+          <Button variant="outline">Add New Product</Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Add New Product</DialogTitle>
+            <DialogDescription>
+              Fill in the details for the new product.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleSubmit}>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="name" className="text-right">
+                  Name
+                </label>
+                <Input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="description" className="text-right">
+                  Description
+                </label>
+                <Input
+                  type="text"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="category" className="text-right">
+                  Category
+                </label>
+                <Input
+                  type="text"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="quantity" className="text-right">
+                  Quantity
+                </label>
+                <Input
+                  type="number"
+                  name="quantity"
+                  value={formData.quantity}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <label htmlFor="price" className="text-right">
+                  Price
+                </label>
+                <Input
+                  type="number"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleInputChange}
+                  className="col-span-3"
+                  required
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit">Add Product</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
       <h2 className="text-2xl font-bold mt-8 mb-4">Product List</h2>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {products?.map((product) => (
-          <li
-            key={product._id}
-            className="p-4 border border-gray-300 rounded-md"
-          >
-            <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-            <p className="text-gray-600 mb-2">{product.description}</p>
-            <p className="text-blue-500 font-bold">
-              Category: {product.category}
-            </p>
-            <p className="mt-2">
-              <span className="font-bold">Quantity:</span> {product.quantity}
-            </p>
-            <p>
-              <span className="font-bold">Price:</span> ${product.price}
-            </p>
-            <button
-              onClick={() => handleDelete(product._id)}
-              className="mt-4 bg-red-500 text-white p-2 rounded hover:bg-red-700"
-            >
-              Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+      <Table>
+        <TableHeader className="border-y">
+          {/* <TableRow className="hover:none"> */}
+          <TableHead>Name</TableHead>
+          <TableHead>Description</TableHead>
+          <TableHead>Category</TableHead>
+          <TableHead>Quantity</TableHead>
+          <TableHead className="text-right ">Price</TableHead>
+          <TableHead></TableHead>
+          {/* </TableRow> */}
+        </TableHeader>
+        <TableBody>
+          {products?.map((product) => (
+            <TableRow key={product.name}>
+              <TableCell>{product.name}</TableCell>
+              <TableCell>{product.description}</TableCell>
+              <TableCell>{product.category}</TableCell>
+              <TableCell>{product.quantity}</TableCell>
+              <TableCell className="text-right">{product.price}</TableCell>
+              <TableCell className="text-right">
+                <button
+                  onClick={() => handleDelete(product._id)}
+                  className="top-2 right-2 p-1 bg-red-500 text-white rounded-md hover:bg-red-700"
+                >
+                  <TrashIcon size={18} />
+                </button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 };

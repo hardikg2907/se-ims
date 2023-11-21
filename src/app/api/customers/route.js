@@ -1,37 +1,24 @@
-// pages/api/customers.js
 import { ObjectId } from "mongodb";
-import { connectToDatabase } from "@/utils/mongodb";
+import clientPromise from "@/utils/mongodb";
 
-export default async function handler(req, res) {
-  const { method } = req;
+const client = await clientPromise;
+const db = client.db("se-ims");
+export async function GET(req, res) {
+  try {
+    const customers = await db.collection("customers").find({}).toArray();
+    return Response.json(customers);
+  } catch (error) {
+    return Response.json({ error: "Internal Server Error" });
+  }
+}
 
-  const { db } = await connectToDatabase();
-
-  switch (method) {
-    case "GET":
-      try {
-        const customers = await db.collection("customers").find({}).toArray();
-        res.status(200).json(customers);
-      } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
-      }
-      break;
-
-    case "POST":
-      try {
-        const { name, contactInfo, address } = req.body;
-        const customer = { name, contactInfo, address };
-        const result = await db.collection("customers").insertOne(customer);
-        res.status(201).json(result.ops[0]);
-      } catch (error) {
-        res.status(500).json({ error: "Internal Server Error" });
-      }
-      break;
-
-    // Add additional CRUD operations as needed
-
-    default:
-      res.status(405).json({ error: "Method Not Allowed" });
-      break;
+export async function POST(req, res) {
+  try {
+    const { name, contactInfo, address } = await req.json();
+    const customer = { name, contactInfo, address };
+    const result = await db.collection("customers").insertOne(customer);
+    return Response.json(result.ops[0]);
+  } catch (error) {
+    return Response.json({ error: "Internal Server Error" });
   }
 }
