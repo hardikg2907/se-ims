@@ -31,7 +31,6 @@ mockAxios.onGet("/api/customers").reply(200, sampleCustomers);
 
 // Mock the axios.post request for adding a customer
 mockAxios.onPost("/api/customers").reply(200);
-
 // Mock the axios.delete request for deleting a customer
 mockAxios.onDelete("/api/customers/1").reply(200);
 
