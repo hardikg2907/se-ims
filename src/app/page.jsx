@@ -30,6 +30,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+} from "@/components/ui/hover-card";
+// import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Transactions() {
   const [transactions, setTransactions] = useState([]);
@@ -39,6 +46,7 @@ export default function Transactions() {
   const [newTransactionDialogOpen, setNewTransactionDialogOpen] =
     useState(false);
   const [products, setProducts] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     fetchTransactions();
@@ -147,11 +155,19 @@ export default function Transactions() {
                 <label htmlFor="productId" className="text-right">
                   Product
                 </label>
-                <Select onValueChange={(e) => setProductId(e)}>
+                <Select
+                  onValueChange={(e) => {
+                    if (e === "+") router.push("/products");
+                    else setProductId(e);
+                  }}
+                >
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select Product" />
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="+" className="cursor-pointer">
+                      + Add Product
+                    </SelectItem>
                     {products?.map((product) => (
                       <SelectItem key={product._id} value={product._id}>
                         {product.name}
@@ -193,7 +209,51 @@ export default function Transactions() {
                 {transaction.type === "stock-in" ? "+" : "-"}
                 {transaction.quantity}
               </TableCell>
-              <TableCell>{transaction?.product?.name}</TableCell>
+              <TableCell>
+                {" "}
+                <HoverCard>
+                  <HoverCardTrigger>
+                    <span className="hover:underline cursor-pointer">
+                      {transaction?.product?.name}
+                    </span>
+                  </HoverCardTrigger>
+                  <HoverCardContent>
+                    <div className="">
+                      <p className="text-lg mb-2">
+                        <span className="font-semibold">Product Name:</span>
+                        <br />
+                        {transaction?.product?.name}
+                      </p>
+                      <div>
+                        <p>
+                          {" "}
+                          <span className="font-semibold">Price: </span>
+                          Rs.{transaction?.product?.price}
+                        </p>
+                        {/* Add additional product details as needed */}
+                      </div>
+                      <div>
+                        <p>
+                          {" "}
+                          <span className="font-semibold">Category: </span>
+                          {transaction?.product?.category || "-"}
+                        </p>
+                        <p>
+                          <span className="font-semibold">Quantity: </span>
+                          {transaction?.product?.quantity}
+                        </p>
+                        {/* Add more details based on your product structure */}
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <p className="text-gray-700">
+                        <span className="font-semibold">Description: </span>
+                        {transaction?.product?.description || "-"}
+                      </p>
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+              </TableCell>
               <TableCell>
                 {new Date(transaction.timestamp).toLocaleString()}
               </TableCell>
