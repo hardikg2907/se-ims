@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/table";
 import { TrashIcon } from "lucide-react";
 
-const Home = () => {
+const Page = () => {
   const [products, setProducts] = useState([]);
   const [isModal, setIsModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -98,6 +98,7 @@ const Home = () => {
                 <Input
                   type="text"
                   name="name"
+                  id="name"
                   value={formData.name}
                   onChange={handleInputChange}
                   className="col-span-3"
@@ -111,6 +112,7 @@ const Home = () => {
                 <Input
                   type="text"
                   name="description"
+                  id="description"
                   value={formData.description}
                   onChange={handleInputChange}
                   className="col-span-3"
@@ -123,6 +125,7 @@ const Home = () => {
                 <Input
                   type="text"
                   name="category"
+                  id="category"
                   value={formData.category}
                   onChange={handleInputChange}
                   className="col-span-3"
@@ -135,6 +138,7 @@ const Home = () => {
                 <Input
                   type="number"
                   name="quantity"
+                  id="quantity"
                   value={formData.quantity}
                   onChange={handleInputChange}
                   className="col-span-3"
@@ -148,6 +152,7 @@ const Home = () => {
                 <Input
                   type="number"
                   name="price"
+                  id="price"
                   value={formData.price}
                   onChange={handleInputChange}
                   className="col-span-3"
@@ -197,4 +202,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Page;
