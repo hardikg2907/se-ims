@@ -20,8 +20,8 @@ jobs:
       - run: npm run build
       - uses: actions/upload-artifact@v2
         with:
-          name: build
-          path: build/
+          name: .next
+          path: .next/
 
   test:
     needs: build
@@ -36,8 +36,8 @@ jobs:
       - run: npm install
       - uses: actions/download-artifact@v2
         with:
-          name: build
-          path: build
+          name: .next
+          path: .next
       - run: npm run test
 
   deploy:
@@ -57,8 +57,8 @@ jobs:
       - name: Download Build Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: build
-          path: build
+          name: .next
+          path: .next
 
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
