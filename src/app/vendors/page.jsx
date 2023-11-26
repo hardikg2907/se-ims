@@ -76,17 +76,21 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Vendor Management</h1>
+    <div>
+      <h1 className="font-bold py-2 text-2xl px-6 text-gray-600">
+        Vendor Management
+      </h1>
       <button
         onClick={openModal}
-        className="bg-green-500 text-white p-2 rounded hover:bg-green-700 mb-4"
+        className="bg-green-500 text-white font-bold rounded-md hover:bg-green-800 hover:text-gray-300 mb-4 py-2 px-2 mx-6 my-2 shadow-lg shadow-gray-400/40"
       >
         Add New Vendor
       </button>
 
-      <h2 className="text-2xl font-bold mt-8 mb-4">Vendor List</h2>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <h2 className="mt-2 mx-6 font-bold text-gray-600 text-lg mb-4">
+        Vendor List
+      </h2>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-6">
         {vendors?.map((vendor) => (
           <li
             key={vendor._id}

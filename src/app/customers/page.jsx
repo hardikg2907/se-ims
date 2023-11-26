@@ -83,10 +83,17 @@ export default function Customers() {
 
   return (
     <div>
-      <h1>Customer Management</h1>
+      <h1 className="font-bold py-2 text-2xl px-6 text-gray-600">
+        Customer Management
+      </h1>
       <Dialog open={isModal} onOpenChange={setIsModal}>
         <DialogTrigger asChild>
-          <Button variant="outline">Add New Customer</Button>
+          <Button
+            variant="outline"
+            className="bg-green-500 text-white font-bold rounded-md hover:bg-green-800 hover:text-gray-300 mb-4 py-4 px-2 mx-6 my-2 shadow-lg shadow-gray-400/40"
+          >
+            Add New Customer
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -143,12 +150,14 @@ export default function Customers() {
           </form>
         </DialogContent>
       </Dialog>
-      <h2>Customer List</h2>
-      <ul className="grid gap-4">
+      <h2 className="mt-2 mx-6 font-bold text-gray-600 text-lg mb-4">
+        Customer List
+      </h2>
+      <ul className="grid gap-4 mx-4">
         {customers?.map((customer) => (
           <li
             key={customer._id}
-            className="text-slate-700 border p-4 rounded-md transition-transform duration-300 ease-in-out transform hover:shadow-md hover:-translate-y-1 hover:border-blue-500 flex justify-between mx-2"
+            className="bg-gray-50 hover:font-bold hover:bg-gray-100 text-slate-700 border p-4 rounded-md transition-transform duration-300 ease-in-out transform hover:shadow-md hover:-translate-y-1 hover:border-blue-500 flex justify-between mx-2"
           >
             <h3 className="cursor-pointer">{customer.name}</h3>
 

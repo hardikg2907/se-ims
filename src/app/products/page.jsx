@@ -75,13 +75,23 @@ const Page = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">Product Management</h1>
+    <div>
+      <h1 className="font-bold py-2 text-2xl px-6 text-gray-600">
+        Product Management
+      </h1>
 
       <Dialog open={isModal} onOpenChange={setIsModal}>
         <DialogTrigger asChild>
-          <Button variant="outline">Add New Product</Button>
+          <Button
+            variant="outline"
+            className="bg-green-500 mx-6 text-white font-bold rounded-md hover:bg-green-800 hover:text-gray-300 mb-4 py-4 px-2  my-2 shadow-lg shadow-gray-400/40"
+          >
+            Add New Product
+          </Button>
         </DialogTrigger>
+        <h2 className="mt-2 mx-6 font-bold text-gray-600 text-lg ">
+          Product List
+        </h2>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add New Product</DialogTitle>
@@ -166,9 +176,8 @@ const Page = () => {
           </form>
         </DialogContent>
       </Dialog>
-      <h2 className="text-2xl font-bold mt-8 mb-4">Product List</h2>
-      <Table>
-        <TableHeader className="border-y">
+      <Table className="mt-4">
+        <TableHeader className="bg-gray-200 text-gray-700">
           {/* <TableRow className="hover:none"> */}
           <TableHead>Name</TableHead>
           <TableHead>Description</TableHead>

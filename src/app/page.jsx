@@ -100,14 +100,21 @@ export default function Transactions() {
   console.log(productId);
   return (
     <div>
-      <h1>Transaction Management</h1>
+      <h1 className="font-bold py-2 text-2xl px-6 text-gray-600">
+        Transaction Management
+      </h1>
       {/* New Transaction Dialog */}
       <Dialog
         open={newTransactionDialogOpen}
         onOpenChange={setNewTransactionDialogOpen}
       >
         <DialogTrigger asChild>
-          <Button variant="outline">Add New Transaction</Button>
+          <Button
+            variant="outline"
+            className="bg-green-500 text-white font-bold rounded-md hover:bg-green-800 hover:text-gray-300 mb-4 py-4 px-2 mx-6 my-2 shadow-lg shadow-gray-400/40"
+          >
+            Add New Transaction
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -183,16 +190,17 @@ export default function Transactions() {
           </form>
         </DialogContent>
       </Dialog>
+      <h2 className="mt-2 mx-6 font-bold text-gray-600 text-lg">
+        Transaction List
+      </h2>
 
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px] truncate">Transaction ID</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Quantity</TableHead>
-            <TableHead>Product Name</TableHead>
-            <TableHead>Timestamp</TableHead>
-          </TableRow>
+      <Table className="mt-4">
+        <TableHeader className="bg-gray-200 text-gray-700">
+          <TableHead className="w-[100px] truncate">Transaction ID</TableHead>
+          <TableHead>Type</TableHead>
+          <TableHead>Quantity</TableHead>
+          <TableHead>Product Name</TableHead>
+          <TableHead>Timestamp</TableHead>
         </TableHeader>
         <TableBody>
           {transactions.map((transaction) => (
