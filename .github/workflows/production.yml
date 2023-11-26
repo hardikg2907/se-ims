@@ -64,4 +64,4 @@ jobs:
         run: npm install -g netlify-cli
 
       - name: Deploy to Netlify
-        run: npx netlify deploy --dir=build --site ${{ secrets.NETLIFY_SITE_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --prod
+        run: npx netlify deploy --dir=.next --site ${{ secrets.NETLIFY_SITE_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --prod
